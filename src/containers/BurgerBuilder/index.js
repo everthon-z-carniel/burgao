@@ -1,8 +1,11 @@
-import React, { Component } from "react";
-import arrayMove from "array-move";
-
-import Burger from '../../components/Burger/index'
+import React, { Component } from 'react';
+import arrayMove from 'array-move';
+import Burger from '../../components/Burger/styles';
+import Ingredient from '../../components/Burger/Ingredient';
 import BuildControls from '../../components/Burger/BuildControls/index';
+
+import SortableIngredients from '../../hoc/SortableIngredients';
+import _ from 'lodash';
 
 const PRICES = {
   salad: 0.5,
@@ -23,17 +26,18 @@ class BurgerBuilder extends Component {
     totalPrice: 4
   }
 
-  handleSortEnd = ({oldIndex, newIndex}) => {
-    let ingredientsList = [...this.state.ingredientsList];
-
-    this.setState({
-      ingredientsList: arrayMove(ingredientsList, oldIndex, newIndex)
-    });
+  handleSortEnd = ({ oldIndex, newIndex }) => {
+    const { ingredientsList } = this.state;
+    
+    if (ingredientsList[oldIndex]) {
+      this.setState({
+        ingredientsList: arrayMove(ingredientsList, oldIndex, newIndex),
+      });
+    }
   };
  
   addIngredientHandler = (type) => {
-    const { ingredients, ingredientsList } = this.state;
-    const { totalPrice } = this.state;
+    const { ingredients, ingredientsList, totalPrice } = this.state;
 
     if(ingredients[type] < 3) {
       const updatedIngredients = {
@@ -41,13 +45,17 @@ class BurgerBuilder extends Component {
       }
 
       updatedIngredients[type] = ingredients[type] + 1;
-      const ingredient = {
+
+      const _ingredient = {
         id: `${type}-${updatedIngredients[type]}`,
         type,
       };
 
+      const ingredient = <Ingredient key={_ingredient.id} type={_ingredient.type} />
+
       const updatedIngredientsList = [...ingredientsList];
       updatedIngredientsList.push(ingredient);
+
 
       this.setState({
         totalPrice: totalPrice + PRICES[type],
@@ -58,29 +66,44 @@ class BurgerBuilder extends Component {
   }
 
   removeIngredientHandler = (type) => {
-    const { ingredients, totalPrice } = this.state;
+    let { ingredients, ingredientsList, totalPrice } = this.state;
     
-    if (ingredients[type]) {
+    if(ingredients[type]) {
       const updatedIngredients = {
         ...ingredients
       }
-      updatedIngredients[type] = ingredients[type] - 1;
+      const ingredient = _.find(ingredientsList, { key: `${type}-${ingredients[type]}` });
       
-      this.setState({
+      const idxIng = _.indexOf(ingredientsList, ingredient);
+
+      updatedIngredients[type] = ingredients[type] - 1;
+
+      const updatedIngredientsList = [...ingredientsList];
+      updatedIngredientsList.splice(idxIng, 1);
+
+      this.setState({ 
         totalPrice: totalPrice - PRICES[type],
         ingredients: updatedIngredients,
+        ingredientsList: updatedIngredientsList,
       })
-    }
-  }  
+  }}
 
   render() {
+    const { ingredientsList } = this.state;
     return (
       <>
-        <Burger
-          ingredientsList={this.state.ingredientsList}
-          onSortEnd={this.handleSortEnd}
-        />
+        <Burger>
+          <Ingredient type="bread-top" />
+            <div>
+              <SortableIngredients
+                ingredients={this.state.ingredientsList}
+                onSortEnd={this.handleSortEnd}
+              />
+            </div>
+          <Ingredient type="bread-bottom" />
+        </Burger>
         <BuildControls
+          ingredients={ingredientsList}
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler} 
         />

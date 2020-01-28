@@ -91,8 +91,8 @@ const Seeds2 = styled.div`
 `;
 
 const Meat = styled.div`
-  width: 85%;
-  height: 8%;
+  width: 360px;
+  height: 25px;
   background: linear-gradient(#7f3608, #602e05);
   border-radius: 15px;
 `;
@@ -100,8 +100,8 @@ const Meat = styled.div`
 const Cheese = styled.div`
   position: relative;
   z-index: 2;
-  width: 83%;
-  height: 6%;
+  width: 400px;
+  height: 50px;
   margin-bottom: -1.8%;
   background: linear-gradient(#f4d004, #d6bb22);
   clip-path: polygon(0 0, 100% 0, 100% 50%, 84% 50%, 64% 100%, 39% 50%, 0 50%);
