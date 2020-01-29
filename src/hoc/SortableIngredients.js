@@ -15,6 +15,7 @@ const SortableList = SortableContainer(({ingredients, onSortEnd}) => (
   }}>
     {ingredients.map((item, index) => (
         <SortableItem
+          key={index}
           index={index}
           value={item}
           onSortEnd={onSortEnd}

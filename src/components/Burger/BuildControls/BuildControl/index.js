@@ -5,8 +5,6 @@ import {
   Label
 } from './styles';
 
-import _ from 'lodash';
-
 const buildControl = (props) => {
   return (
     <Control>

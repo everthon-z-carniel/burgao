@@ -1,7 +1,6 @@
 import React from 'react';
-import Controls from './styles'
-import BuildControl from './BuildControl/index';
-import _ from 'lodash';
+import BuildControl from './BuildControl';
+import { Controls, BtnOrder } from './styles'
 
 const controls = [
   { label: 'Salad', type: 'salad' },
@@ -11,20 +10,22 @@ const controls = [
 ];
 
 const buildControls = (props) => (
-  <Controls>
-    {controls.map((ctrl, index) => {
-      return (
-        <BuildControl 
-          key={ctrl.label}             
-          label={ctrl.label} 
-          type={ctrl.type}
-          ingredients={props.ingredients}
-          added={() => props.ingredientAdded(ctrl.type)} 
-          removed={() => props.ingredientRemoved(ctrl.type)}
-        />
-      )
-    })}
-  </Controls>
+    <Controls>
+      <p>Total price: ${props.price.toFixed(2)}</p>
+      {controls.map((ctrl, index) => {
+        return (
+          <BuildControl 
+            key={ctrl.label}             
+            label={ctrl.label} 
+            type={ctrl.type}
+            ingredients={props.ingredients}
+            added={() => props.ingredientAdded(ctrl.type)} 
+            removed={() => props.ingredientRemoved(ctrl.type)}
+          />
+        )
+      })}
+      <BtnOrder disabled={!props.purchasable}>ORDER NOW</BtnOrder>
+    </Controls>
 );
 
 export default buildControls;

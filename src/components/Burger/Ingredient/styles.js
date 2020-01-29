@@ -10,7 +10,7 @@ const BreadBottom = styled.div`
 `;
 
 const BreadTop = styled.div`
-  height: 100px;
+  height: 120px;
   width: 80%;
   background: linear-gradient(#bc581e, #e27b36);
   border-radius: 150px 150px 20px 20px;
@@ -100,9 +100,9 @@ const Meat = styled.div`
 const Cheese = styled.div`
   position: relative;
   z-index: 1;
-  margin-bottom: -3%;
+  margin-bottom: -11px;
   width: 100%;
-  height: 24px;
+  height: 26px;
   background: linear-gradient(#f4d004, #d6bb22);
   clip-path: polygon(0 0, 100% 0, 100% 50%, 84% 50%, 64% 100%, 39% 50%, 0 50%);
   border-radius: 15px;
@@ -118,9 +118,9 @@ const Bacon = () => (
     <svg 
       viewBox="0 0 450 20" 
       style={{
-        marginTop: "-3%",
-        marginBottom: "-4%",
-        height: "40px", 
+        marginTop: "-8px",
+        marginBottom: "-10px",
+        height: "40px",
         width: "100%"
       }}
     >
@@ -135,22 +135,22 @@ const Salad = () => (
   <div
     style={{
       display: "flex",
-      width: "102%"
+      width: "102%",
+      marginTop: "-8px",
+      position: "relative",
+      zIndex: "2"
     }}
   >
     <svg 
-      viewBox="0 0 450 10" 
+      viewBox="-0.5 0 450 10" 
       style={{
-        zIndex: "2",
-        marginTop: "-7.5%",
-        marginBottom: "-0.5%",
         height: "40px", 
         width: "120%"
       }}
     >
       <path 
         fill="#7bbc46" 
-        d="M 0 14 
+        d="M 0 3 
           q 30 -30 63 0 
           q -30 -30 63 0 q -30 -30 63 0
           q 30 -30 63 0 q -30 -30 63 0 

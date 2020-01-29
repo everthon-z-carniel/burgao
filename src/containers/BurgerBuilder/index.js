@@ -3,11 +3,11 @@ import arrayMove from 'array-move';
 import Burger from '../../components/Burger/styles';
 import Ingredient from '../../components/Burger/Ingredient';
 import BuildControls from '../../components/Burger/BuildControls/index';
-
 import SortableIngredients from '../../hoc/SortableIngredients';
 import _ from 'lodash';
+import Modal from '../../components/UI/Modal';
 
-const PRICES = {
+const prices = {
   salad: 0.5,
   cheese: 0.4,
   meat: 1.3,
@@ -23,7 +23,8 @@ class BurgerBuilder extends Component {
       meat: 0
     },
     ingredientsList: [],
-    totalPrice: 4
+    totalPrice: 4,
+    purchasable: false
   }
 
   handleSortEnd = ({ oldIndex, newIndex }) => {
@@ -36,6 +37,12 @@ class BurgerBuilder extends Component {
     }
   };
  
+  updatePurchaseState(ingredientsList) {
+    this.setState({
+      purchasable: ingredientsList.length >= 3
+    })
+  };
+
   addIngredientHandler = (type) => {
     const { ingredients, ingredientsList, totalPrice } = this.state;
 
@@ -56,11 +63,12 @@ class BurgerBuilder extends Component {
       const updatedIngredientsList = [...ingredientsList];
       updatedIngredientsList.push(ingredient);
 
+      this.updatePurchaseState(updatedIngredientsList)
 
       this.setState({
-        totalPrice: totalPrice + PRICES[type],
+        totalPrice: totalPrice + prices[type],
         ingredients: updatedIngredients,
-        ingredientsList: updatedIngredientsList,
+        ingredientsList: updatedIngredientsList
       })
     }
   }
@@ -69,9 +77,7 @@ class BurgerBuilder extends Component {
     let { ingredients, ingredientsList, totalPrice } = this.state;
     
     if(ingredients[type]) {
-      const updatedIngredients = {
-        ...ingredients
-      }
+      const updatedIngredients = {...ingredients}
       const ingredient = _.find(ingredientsList, { key: `${type}-${ingredients[type]}` });
       
       const idxIng = _.indexOf(ingredientsList, ingredient);
@@ -81,31 +87,46 @@ class BurgerBuilder extends Component {
       const updatedIngredientsList = [...ingredientsList];
       updatedIngredientsList.splice(idxIng, 1);
 
+      this.updatePurchaseState(updatedIngredientsList)
+
       this.setState({ 
-        totalPrice: totalPrice - PRICES[type],
+        totalPrice: totalPrice - prices[type],
         ingredients: updatedIngredients,
         ingredientsList: updatedIngredientsList,
       })
   }}
 
   render() {
-    const { ingredientsList } = this.state;
+    const { 
+      ingredientsList, 
+      totalPrice, 
+      purchasable
+    } = this.state;  
+    const { 
+      handleSortEnd, 
+      addIngredientHandler, 
+      removeIngredientHandler
+    } = this;
+
     return (
       <>
+        {/* <Modal /> */}
         <Burger>
           <Ingredient type="bread-top" />
             <div style={{width: '80%'}}>
               <SortableIngredients
-                ingredients={this.state.ingredientsList}
-                onSortEnd={this.handleSortEnd}
+                ingredients={ingredientsList}
+                onSortEnd={handleSortEnd}
               />
             </div>
           <Ingredient type="bread-bottom" />
         </Burger>
         <BuildControls
+          purchasable={purchasable}
+          price={totalPrice}
           ingredients={ingredientsList}
-          ingredientAdded={this.addIngredientHandler}
-          ingredientRemoved={this.removeIngredientHandler} 
+          ingredientAdded={addIngredientHandler}
+          ingredientRemoved={removeIngredientHandler} 
         />
       </>
     );
