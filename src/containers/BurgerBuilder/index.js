@@ -94,7 +94,7 @@ class BurgerBuilder extends Component {
       <>
         <Burger>
           <Ingredient type="bread-top" />
-            <div>
+            <div style={{width: '80%'}}>
               <SortableIngredients
                 ingredients={this.state.ingredientsList}
                 onSortEnd={this.handleSortEnd}

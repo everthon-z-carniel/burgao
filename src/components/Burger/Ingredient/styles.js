@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import React from 'react';
 
 const BreadBottom = styled.div`
-  height: 10%;
+  height: 50px;
   width: 80%;
   background: linear-gradient(#F08E4A, #e27b36);
   border-radius: 0 0 30px 30px;
@@ -10,7 +10,7 @@ const BreadBottom = styled.div`
 `;
 
 const BreadTop = styled.div`
-  height: 24%;
+  height: 100px;
   width: 80%;
   background: linear-gradient(#bc581e, #e27b36);
   border-radius: 150px 150px 20px 20px;
@@ -91,18 +91,18 @@ const Seeds2 = styled.div`
 `;
 
 const Meat = styled.div`
-  width: 360px;
-  height: 25px;
+  width: 100%;;
+  height: 35px;
   background: linear-gradient(#7f3608, #602e05);
   border-radius: 15px;
 `;
 
 const Cheese = styled.div`
   position: relative;
-  z-index: 2;
-  width: 400px;
-  height: 50px;
-  margin-bottom: -1.8%;
+  z-index: 1;
+  margin-bottom: -3%;
+  width: 100%;
+  height: 24px;
   background: linear-gradient(#f4d004, #d6bb22);
   clip-path: polygon(0 0, 100% 0, 100% 50%, 84% 50%, 64% 100%, 39% 50%, 0 50%);
   border-radius: 15px;
@@ -112,14 +112,14 @@ const Bacon = () => (
   <div
     style={{
       display: "flex",
-      width: "80.5%"
+      width: "100%"
     }}
   >
     <svg 
       viewBox="0 0 450 20" 
       style={{
         marginTop: "-3%",
-        marginBottom: "-3%",
+        marginBottom: "-4%",
         height: "40px", 
         width: "100%"
       }}
@@ -135,18 +135,17 @@ const Salad = () => (
   <div
     style={{
       display: "flex",
-      width: "85%"
+      width: "102%"
     }}
   >
     <svg 
       viewBox="0 0 450 10" 
       style={{
-        zIndex: "1",
-        marginTop: "-6%",
-        marginLeft: "2%",
-        marginBottom: "3%",
+        zIndex: "2",
+        marginTop: "-7.5%",
+        marginBottom: "-0.5%",
         height: "40px", 
-        width: "100%"
+        width: "120%"
       }}
     >
       <path 
