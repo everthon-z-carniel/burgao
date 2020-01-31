@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Modal = styled.div`
   position: fixed;
   z-index: 500;
-  background-color: white;
+  background-color: #282c34;
   width: 70%;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 1px black;

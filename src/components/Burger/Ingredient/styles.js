@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import React from 'react';
 
 const BreadBottom = styled.div`
-  height: 50px;
+  min-height: 40px;
   width: 80%;
   background: linear-gradient(#F08E4A, #e27b36);
   border-radius: 0 0 30px 30px;
@@ -10,7 +10,7 @@ const BreadBottom = styled.div`
 `;
 
 const BreadTop = styled.div`
-  height: 120px;
+  min-height: 120px;
   width: 80%;
   background: linear-gradient(#bc581e, #e27b36);
   border-radius: 150px 150px 20px 20px;

@@ -6,6 +6,7 @@ import BuildControls from '../../components/Burger/BuildControls/index';
 import SortableIngredients from '../../hoc/SortableIngredients';
 import _ from 'lodash';
 import Modal from '../../components/UI/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary';
 
 const prices = {
   salad: 0.5,
@@ -24,7 +25,8 @@ class BurgerBuilder extends Component {
     },
     ingredientsList: [],
     totalPrice: 4,
-    purchasable: false
+    purchasable: false,
+    purchasing: false
   }
 
   handleSortEnd = ({ oldIndex, newIndex }) => {
@@ -42,6 +44,18 @@ class BurgerBuilder extends Component {
       purchasable: ingredientsList.length >= 3
     })
   };
+
+  purchasingHandler = () => {
+    this.setState({purchasing: true});
+  }
+
+  purchasingCancelHandler = () => {
+    this.setState({purchasing: false});
+  }
+
+  purchasingContinueHandler = () => {
+    alert('You continue!');
+  }
 
   addIngredientHandler = (type) => {
     const { ingredients, ingredientsList, totalPrice } = this.state;
@@ -98,19 +112,34 @@ class BurgerBuilder extends Component {
 
   render() {
     const { 
-      ingredientsList, 
+      ingredientsList,
+      ingredients, 
       totalPrice, 
-      purchasable
+      purchasable,
+      purchasing
     } = this.state;  
     const { 
       handleSortEnd, 
+      purchasingHandler,
+      purchasingCancelHandler,
+      purchasingContinueHandler,
       addIngredientHandler, 
       removeIngredientHandler
     } = this;
 
     return (
       <>
-        {/* <Modal /> */}
+        <Modal 
+          show={purchasing}
+          modalClosed={purchasingCancelHandler}
+        > 
+          <OrderSummary 
+            ingredients={ingredients} 
+            price={totalPrice}
+            canceled={purchasingCancelHandler}
+            continued={purchasingContinueHandler}  
+          />
+        </Modal>
         <Burger>
           <Ingredient type="bread-top" />
             <div style={{width: '80%'}}>
@@ -123,6 +152,7 @@ class BurgerBuilder extends Component {
         </Burger>
         <BuildControls
           purchasable={purchasable}
+          ordered={purchasingHandler}
           price={totalPrice}
           ingredients={ingredientsList}
           ingredientAdded={addIngredientHandler}
